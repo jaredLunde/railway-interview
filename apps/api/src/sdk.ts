@@ -1,4 +1,5 @@
 import { GraphQLClient } from "graphql-request";
+// @ts-ignore
 import { GraphQLClientRequestHeaders } from "graphql-request/build/cjs/types";
 import gql from "graphql-tag";
 export type Maybe<T> = T | null;
@@ -8,12 +9,18 @@ export type Exact<T extends { [key: string]: unknown }> = {
 };
 export type MakeOptional<T, K extends keyof T> =
   & Omit<T, K>
-  & { [SubKey in K]?: Maybe<T[SubKey]> };
+  & {
+    [SubKey in K]?: Maybe<T[SubKey]>;
+  };
 export type MakeMaybe<T, K extends keyof T> =
   & Omit<T, K>
-  & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
-  { [_ in K]?: never };
+  & {
+    [SubKey in K]: Maybe<T[SubKey]>;
+  };
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
 export type Incremental<T> =
   | T
   | {
@@ -3689,45 +3696,39 @@ export type MeQuery = {
     id: string;
     projects: {
       __typename?: "UserProjectsConnection";
-      edges: Array<
-        {
-          __typename?: "UserProjectsConnectionEdge";
-          node: {
-            __typename?: "Project";
+      edges: Array<{
+        __typename?: "UserProjectsConnectionEdge";
+        node: {
+          __typename?: "Project";
+          id: string;
+          name: string;
+          description?: string | null;
+          createdAt: any;
+          baseEnvironment?: {
+            __typename?: "Environment";
             id: string;
             name: string;
-            description?: string | null;
-            createdAt: any;
-            baseEnvironment?: {
-              __typename?: "Environment";
-              id: string;
-              name: string;
-            } | null;
-            environments: {
-              __typename?: "ProjectEnvironmentsConnection";
-              edges: Array<
-                {
-                  __typename?: "ProjectEnvironmentsConnectionEdge";
-                  node: {
-                    __typename?: "Environment";
-                    id: string;
-                    name: string;
-                  };
-                }
-              >;
-            };
-            services: {
-              __typename?: "ProjectServicesConnection";
-              edges: Array<
-                {
-                  __typename?: "ProjectServicesConnectionEdge";
-                  node: { __typename?: "Service"; id: string; name: string };
-                }
-              >;
-            };
+          } | null;
+          environments: {
+            __typename?: "ProjectEnvironmentsConnection";
+            edges: Array<{
+              __typename?: "ProjectEnvironmentsConnectionEdge";
+              node: {
+                __typename?: "Environment";
+                id: string;
+                name: string;
+              };
+            }>;
           };
-        }
-      >;
+          services: {
+            __typename?: "ProjectServicesConnection";
+            edges: Array<{
+              __typename?: "ProjectServicesConnectionEdge";
+              node: { __typename?: "Service"; id: string; name: string };
+            }>;
+          };
+        };
+      }>;
     };
   };
 };
@@ -3744,74 +3745,70 @@ export type GetProjectQuery = {
     name: string;
     description?: string | null;
     createdAt: any;
-    baseEnvironment?:
-      | { __typename?: "Environment"; id: string; name: string }
-      | null;
+    baseEnvironment?: {
+      __typename?: "Environment";
+      id: string;
+      name: string;
+    } | null;
     environments: {
       __typename?: "ProjectEnvironmentsConnection";
-      edges: Array<
-        {
-          __typename?: "ProjectEnvironmentsConnectionEdge";
-          node: { __typename?: "Environment"; id: string; name: string };
-        }
-      >;
+      edges: Array<{
+        __typename?: "ProjectEnvironmentsConnectionEdge";
+        node: { __typename?: "Environment"; id: string; name: string };
+      }>;
     };
     services: {
       __typename?: "ProjectServicesConnection";
-      edges: Array<
-        {
-          __typename?: "ProjectServicesConnectionEdge";
-          node: {
-            __typename?: "Service";
-            id: string;
-            name: string;
-            icon?: string | null;
-            createdAt: any;
-            serviceInstances: {
-              __typename?: "ServiceServiceInstancesConnection";
-              edges: Array<
-                {
-                  __typename?: "ServiceServiceInstancesConnectionEdge";
-                  node: {
-                    __typename?: "ServiceInstance";
-                    createdAt: any;
-                    domains: {
-                      __typename?: "AllDomains";
-                      customDomains: Array<
-                        { __typename?: "CustomDomain"; domain: string }
-                      >;
-                      serviceDomains: Array<
-                        { __typename?: "ServiceDomain"; domain: string }
-                      >;
-                    };
-                    source?: {
-                      __typename?: "ServiceSource";
-                      repo?: string | null;
-                      image?: string | null;
-                    } | null;
-                  };
-                }
-              >;
-            };
-            deployments: {
-              __typename?: "ServiceDeploymentsConnection";
-              edges: Array<
-                {
-                  __typename?: "ServiceDeploymentsConnectionEdge";
-                  node: {
-                    __typename?: "Deployment";
-                    id: string;
-                    url?: string | null;
-                    staticUrl?: string | null;
-                    status: DeploymentStatus;
-                    createdAt: any;
-                  };
-                }
-              >;
-            };
+      edges: Array<{
+        __typename?: "ProjectServicesConnectionEdge";
+        node: {
+          __typename?: "Service";
+          id: string;
+          name: string;
+          icon?: string | null;
+          createdAt: any;
+          serviceInstances: {
+            __typename?: "ServiceServiceInstancesConnection";
+            edges: Array<{
+              __typename?: "ServiceServiceInstancesConnectionEdge";
+              node: {
+                __typename?: "ServiceInstance";
+                createdAt: any;
+                domains: {
+                  __typename?: "AllDomains";
+                  customDomains: Array<{
+                    __typename?: "CustomDomain";
+                    domain: string;
+                  }>;
+                  serviceDomains: Array<{
+                    __typename?: "ServiceDomain";
+                    domain: string;
+                  }>;
+                };
+                source?: {
+                  __typename?: "ServiceSource";
+                  repo?: string | null;
+                  image?: string | null;
+                } | null;
+              };
+            }>;
           };
-        }
-      >;
+          deployments: {
+            __typename?: "ServiceDeploymentsConnection";
+            edges: Array<{
+              __typename?: "ServiceDeploymentsConnectionEdge";
+              node: {
+                __typename?: "Deployment";
+                id: string;
+                url?: string | null;
+                staticUrl?: string | null;
+                status: DeploymentStatus;
+                createdAt: any;
+              };
+            }>;
+          };
+        };
+      }>;
     };
   };
 };
@@ -3830,43 +3827,39 @@ export type GetServiceQuery = {
     createdAt: any;
     serviceInstances: {
       __typename?: "ServiceServiceInstancesConnection";
-      edges: Array<
-        {
-          __typename?: "ServiceServiceInstancesConnectionEdge";
-          node: {
-            __typename?: "ServiceInstance";
-            id: string;
-            createdAt: any;
-            source?: {
-              __typename?: "ServiceSource";
-              repo?: string | null;
-              image?: string | null;
-            } | null;
-          };
-        }
-      >;
+      edges: Array<{
+        __typename?: "ServiceServiceInstancesConnectionEdge";
+        node: {
+          __typename?: "ServiceInstance";
+          id: string;
+          createdAt: any;
+          source?: {
+            __typename?: "ServiceSource";
+            repo?: string | null;
+            image?: string | null;
+          } | null;
+        };
+      }>;
     };
     deployments: {
       __typename?: "ServiceDeploymentsConnection";
-      edges: Array<
-        {
-          __typename?: "ServiceDeploymentsConnectionEdge";
-          node: {
-            __typename?: "Deployment";
+      edges: Array<{
+        __typename?: "ServiceDeploymentsConnectionEdge";
+        node: {
+          __typename?: "Deployment";
+          id: string;
+          url?: string | null;
+          staticUrl?: string | null;
+          status: DeploymentStatus;
+          canRedeploy: boolean;
+          createdAt: any;
+          environment: {
+            __typename?: "Environment";
             id: string;
-            url?: string | null;
-            staticUrl?: string | null;
-            status: DeploymentStatus;
-            canRedeploy: boolean;
-            createdAt: any;
-            environment: {
-              __typename?: "Environment";
-              id: string;
-              name: string;
-            };
+            name: string;
           };
-        }
-      >;
+        };
+      }>;
     };
   };
 };
@@ -3875,16 +3868,14 @@ export type ListGithubReposQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListGithubReposQuery = {
   __typename?: "Query";
-  githubRepos: Array<
-    {
-      __typename?: "GitHubRepo";
-      id: number;
-      name: string;
-      fullName: string;
-      defaultBranch: string;
-      installationId: string;
-    }
-  >;
+  githubRepos: Array<{
+    __typename?: "GitHubRepo";
+    id: number;
+    name: string;
+    fullName: string;
+    defaultBranch: string;
+    installationId: string;
+  }>;
 };
 
 export type ListTemplatesQueryVariables = Exact<{ [key: string]: never }>;
@@ -3893,30 +3884,26 @@ export type ListTemplatesQuery = {
   __typename?: "Query";
   templates: {
     __typename?: "QueryTemplatesConnection";
-    edges: Array<
-      {
-        __typename?: "QueryTemplatesConnectionEdge";
-        node: {
-          __typename?: "Template";
-          id: string;
-          code: string;
-          metadata: any;
-          services: {
-            __typename?: "TemplateServicesConnection";
-            edges: Array<
-              {
-                __typename?: "TemplateServicesConnectionEdge";
-                node: {
-                  __typename?: "TemplateService";
-                  id: string;
-                  config: any;
-                };
-              }
-            >;
-          };
+    edges: Array<{
+      __typename?: "QueryTemplatesConnectionEdge";
+      node: {
+        __typename?: "Template";
+        id: string;
+        code: string;
+        metadata: any;
+        services: {
+          __typename?: "TemplateServicesConnection";
+          edges: Array<{
+            __typename?: "TemplateServicesConnectionEdge";
+            node: {
+              __typename?: "TemplateService";
+              id: string;
+              config: any;
+            };
+          }>;
         };
-      }
-    >;
+      };
+    }>;
   };
 };
 
@@ -3926,20 +3913,18 @@ export type ListDeploymentLogsQueryVariables = Exact<{
 
 export type ListDeploymentLogsQuery = {
   __typename?: "Query";
-  deploymentLogs: Array<
-    {
-      __typename?: "Log";
-      message: string;
-      severity?: string | null;
-      timestamp: string;
-      tags?: {
-        __typename?: "LogTags";
-        deploymentId?: string | null;
-        deploymentInstanceId?: string | null;
-        serviceId?: string | null;
-      } | null;
-    }
-  >;
+  deploymentLogs: Array<{
+    __typename?: "Log";
+    message: string;
+    severity?: string | null;
+    timestamp: string;
+    tags?: {
+      __typename?: "LogTags";
+      deploymentId?: string | null;
+      deploymentInstanceId?: string | null;
+      serviceId?: string | null;
+    } | null;
+  }>;
 };
 
 export type ListBuildLogsQueryVariables = Exact<{
@@ -3948,20 +3933,18 @@ export type ListBuildLogsQueryVariables = Exact<{
 
 export type ListBuildLogsQuery = {
   __typename?: "Query";
-  deploymentLogs: Array<
-    {
-      __typename?: "Log";
-      message: string;
-      severity?: string | null;
-      timestamp: string;
-      tags?: {
-        __typename?: "LogTags";
-        deploymentId?: string | null;
-        deploymentInstanceId?: string | null;
-        serviceId?: string | null;
-      } | null;
-    }
-  >;
+  deploymentLogs: Array<{
+    __typename?: "Log";
+    message: string;
+    severity?: string | null;
+    timestamp: string;
+    tags?: {
+      __typename?: "LogTags";
+      deploymentId?: string | null;
+      deploymentInstanceId?: string | null;
+      serviceId?: string | null;
+    } | null;
+  }>;
 };
 
 export type DeploymentCancelMutationVariables = Exact<{
@@ -4004,22 +3987,20 @@ export type ServiceCreateMutation = {
     createdAt: any;
     serviceInstances: {
       __typename?: "ServiceServiceInstancesConnection";
-      edges: Array<
-        {
-          __typename?: "ServiceServiceInstancesConnectionEdge";
-          node: {
-            __typename?: "ServiceInstance";
-            id: string;
-            environmentId: string;
-            nixpacksPlan?: any | null;
-            healthcheckPath?: string | null;
-            healthcheckTimeout?: number | null;
-            startCommand?: string | null;
-            buildCommand?: string | null;
-            builder: Builder;
-          };
-        }
-      >;
+      edges: Array<{
+        __typename?: "ServiceServiceInstancesConnectionEdge";
+        node: {
+          __typename?: "ServiceInstance";
+          id: string;
+          environmentId: string;
+          nixpacksPlan?: any | null;
+          healthcheckPath?: string | null;
+          healthcheckTimeout?: number | null;
+          startCommand?: string | null;
+          buildCommand?: string | null;
+          builder: Builder;
+        };
+      }>;
     };
   };
 };
@@ -4045,9 +4026,11 @@ export type ProjectCreateMutation = {
     id: string;
     name: string;
     createdAt: any;
-    baseEnvironment?:
-      | { __typename?: "Environment"; id: string; name: string }
-      | null;
+    baseEnvironment?: {
+      __typename?: "Environment";
+      id: string;
+      name: string;
+    } | null;
   };
 };
 
@@ -4075,9 +4058,9 @@ export type TemplateDeployMutation = {
   };
 };
 
-export type GithubWritableScopesQueryVariables = Exact<
-  { [key: string]: never }
->;
+export type GithubWritableScopesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type GithubWritableScopesQuery = {
   __typename?: "Query";
@@ -4085,33 +4068,166 @@ export type GithubWritableScopesQuery = {
 };
 
 export const MeDocument = gql`
-    query me {
-  me {
-    id
-    projects {
-      edges {
-        node {
-          id
-          name
-          description
-          createdAt
-          baseEnvironment {
+  query me {
+    me {
+      id
+      projects {
+        edges {
+          node {
             id
             name
-          }
-          environments {
-            edges {
-              node {
-                id
-                name
+            description
+            createdAt
+            baseEnvironment {
+              id
+              name
+            }
+            environments {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
+            services {
+              edges {
+                node {
+                  id
+                  name
+                }
               }
             }
           }
+        }
+      }
+    }
+  }
+`;
+export const GetProjectDocument = gql`
+  query getProject($id: String!) {
+    project(id: $id) {
+      id
+      name
+      description
+      createdAt
+      baseEnvironment {
+        id
+        name
+      }
+      environments {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+      services {
+        edges {
+          node {
+            id
+            name
+            icon
+            createdAt
+            serviceInstances {
+              edges {
+                node {
+                  createdAt
+                  domains {
+                    customDomains {
+                      domain
+                    }
+                    serviceDomains {
+                      domain
+                    }
+                  }
+                  source {
+                    repo
+                    image
+                  }
+                }
+              }
+            }
+            deployments {
+              edges {
+                node {
+                  id
+                  url
+                  staticUrl
+                  status
+                  createdAt
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const GetServiceDocument = gql`
+  query getService($id: String!) {
+    service(id: $id) {
+      id
+      name
+      icon
+      createdAt
+      serviceInstances {
+        edges {
+          node {
+            id
+            createdAt
+            source {
+              repo
+              image
+            }
+          }
+        }
+      }
+      deployments {
+        edges {
+          node {
+            id
+            url
+            staticUrl
+            status
+            canRedeploy
+            createdAt
+            environment {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const ListGithubReposDocument = gql`
+  query listGithubRepos {
+    githubRepos {
+      id
+      name
+      fullName
+      defaultBranch
+      installationId
+    }
+  }
+`;
+export const ListTemplatesDocument = gql`
+  query listTemplates {
+    templates {
+      edges {
+        node {
+          id
+          code
+          metadata
           services {
             edges {
               node {
                 id
-                name
+                config
               }
             }
           }
@@ -4119,246 +4235,117 @@ export const MeDocument = gql`
       }
     }
   }
-}
-    `;
-export const GetProjectDocument = gql`
-    query getProject($id: String!) {
-  project(id: $id) {
-    id
-    name
-    description
-    createdAt
-    baseEnvironment {
-      id
-      name
-    }
-    environments {
-      edges {
-        node {
-          id
-          name
-        }
-      }
-    }
-    services {
-      edges {
-        node {
-          id
-          name
-          icon
-          createdAt
-          serviceInstances {
-            edges {
-              node {
-                createdAt
-                domains {
-                  customDomains {
-                    domain
-                  }
-                  serviceDomains {
-                    domain
-                  }
-                }
-                source {
-                  repo
-                  image
-                }
-              }
-            }
-          }
-          deployments {
-            edges {
-              node {
-                id
-                url
-                staticUrl
-                status
-                createdAt
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const GetServiceDocument = gql`
-    query getService($id: String!) {
-  service(id: $id) {
-    id
-    name
-    icon
-    createdAt
-    serviceInstances {
-      edges {
-        node {
-          id
-          createdAt
-          source {
-            repo
-            image
-          }
-        }
-      }
-    }
-    deployments {
-      edges {
-        node {
-          id
-          url
-          staticUrl
-          status
-          canRedeploy
-          createdAt
-          environment {
-            id
-            name
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const ListGithubReposDocument = gql`
-    query listGithubRepos {
-  githubRepos {
-    id
-    name
-    fullName
-    defaultBranch
-    installationId
-  }
-}
-    `;
-export const ListTemplatesDocument = gql`
-    query listTemplates {
-  templates {
-    edges {
-      node {
-        id
-        code
-        metadata
-        services {
-          edges {
-            node {
-              id
-              config
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
+`;
 export const ListDeploymentLogsDocument = gql`
-    query listDeploymentLogs($deploymentId: String!) {
-  deploymentLogs(deploymentId: $deploymentId) {
-    message
-    severity
-    timestamp
-    tags {
-      deploymentId
-      deploymentInstanceId
-      serviceId
+  query listDeploymentLogs($deploymentId: String!) {
+    deploymentLogs(deploymentId: $deploymentId) {
+      message
+      severity
+      timestamp
+      tags {
+        deploymentId
+        deploymentInstanceId
+        serviceId
+      }
     }
   }
-}
-    `;
+`;
 export const ListBuildLogsDocument = gql`
-    query listBuildLogs($deploymentId: String!) {
-  deploymentLogs(deploymentId: $deploymentId) {
-    message
-    severity
-    timestamp
-    tags {
-      deploymentId
-      deploymentInstanceId
-      serviceId
+  query listBuildLogs($deploymentId: String!) {
+    deploymentLogs(deploymentId: $deploymentId) {
+      message
+      severity
+      timestamp
+      tags {
+        deploymentId
+        deploymentInstanceId
+        serviceId
+      }
     }
   }
-}
-    `;
+`;
 export const DeploymentCancelDocument = gql`
-    mutation deploymentCancel($id: String!) {
-  deploymentCancel(id: $id)
-}
-    `;
+  mutation deploymentCancel($id: String!) {
+    deploymentCancel(id: $id)
+  }
+`;
 export const DeploymentRemoveDocument = gql`
-    mutation deploymentRemove($id: String!) {
-  deploymentRemove(id: $id)
-}
-    `;
+  mutation deploymentRemove($id: String!) {
+    deploymentRemove(id: $id)
+  }
+`;
 export const DeploymentRestartDocument = gql`
-    mutation deploymentRestart($id: String!) {
-  deploymentRestart(id: $id)
-}
-    `;
+  mutation deploymentRestart($id: String!) {
+    deploymentRestart(id: $id)
+  }
+`;
 export const ServiceCreateDocument = gql`
-    mutation serviceCreate($input: ServiceCreateInput!) {
-  serviceCreate(input: $input) {
-    id
-    name
-    createdAt
-    serviceInstances {
-      edges {
-        node {
-          id
-          environmentId
-          nixpacksPlan
-          healthcheckPath
-          healthcheckTimeout
-          startCommand
-          buildCommand
-          builder
+  mutation serviceCreate($input: ServiceCreateInput!) {
+    serviceCreate(input: $input) {
+      id
+      name
+      createdAt
+      serviceInstances {
+        edges {
+          node {
+            id
+            environmentId
+            nixpacksPlan
+            healthcheckPath
+            healthcheckTimeout
+            startCommand
+            buildCommand
+            builder
+          }
         }
       }
     }
   }
-}
-    `;
+`;
 export const ServiceDeleteDocument = gql`
-    mutation serviceDelete($environmentId: String!, $id: String!) {
-  serviceDelete(environmentId: $environmentId, id: $id)
-}
-    `;
+  mutation serviceDelete($environmentId: String!, $id: String!) {
+    serviceDelete(environmentId: $environmentId, id: $id)
+  }
+`;
 export const ProjectCreateDocument = gql`
-    mutation projectCreate($input: ProjectCreateInput!) {
-  projectCreate(input: $input) {
-    id
-    name
-    createdAt
-    baseEnvironment {
+  mutation projectCreate($input: ProjectCreateInput!) {
+    projectCreate(input: $input) {
       id
       name
+      createdAt
+      baseEnvironment {
+        id
+        name
+      }
     }
   }
-}
-    `;
+`;
 export const ServiceInstanceUpdateDocument = gql`
-    mutation serviceInstanceUpdate($environmentId: String!, $serviceId: String!, $input: ServiceInstanceUpdateInput!) {
-  serviceInstanceUpdate(
-    environmentId: $environmentId
-    serviceId: $serviceId
-    input: $input
-  )
-}
-    `;
-export const TemplateDeployDocument = gql`
-    mutation templateDeploy($input: TemplateDeployInput!) {
-  templateDeploy(input: $input) {
-    projectId
-    workflowId
+  mutation serviceInstanceUpdate(
+    $environmentId: String!
+    $serviceId: String!
+    $input: ServiceInstanceUpdateInput!
+  ) {
+    serviceInstanceUpdate(
+      environmentId: $environmentId
+      serviceId: $serviceId
+      input: $input
+    )
   }
-}
-    `;
+`;
+export const TemplateDeployDocument = gql`
+  mutation templateDeploy($input: TemplateDeployInput!) {
+    templateDeploy(input: $input) {
+      projectId
+      workflowId
+    }
+  }
+`;
 export const GithubWritableScopesDocument = gql`
-    query githubWritableScopes {
-  githubWritableScopes
-}
-    `;
+  query githubWritableScopes {
+    githubWritableScopes
+  }
+`;
 
 export type SdkFunctionWrapper = <T>(
   action: (requestHeaders?: Record<string, string>) => Promise<T>,
