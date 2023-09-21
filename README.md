@@ -28,3 +28,9 @@ bun install
 ```sh
 bun dev
 ```
+
+4. Open the development environment in your browser
+
+```sh
+open http://localhost:3000
+```
