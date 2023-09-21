@@ -1,4 +1,4 @@
-# FlexStack
+# Deployer
 
 ## Local development
 
@@ -8,8 +8,6 @@
   ```sh
   curl -fsSL https://bun.sh/install | bash
   ```
-- [**Docker**](https://docs.docker.com/get-docker/)
-- [**Docker Compose**](https://docs.docker.com/compose/install/)
 
 ### Setup
 
