@@ -47,7 +47,7 @@ export function useIntl() {
     range(
       start: number,
       end: number,
-      options?: Intl.NumberFormatOptions,
+      options?: Intl.NumberFormatOptions
     ): string {
       return new Intl.NumberFormat(locale, options).formatRange(start, end);
     },
@@ -63,7 +63,7 @@ export function useIntl() {
       value: number,
       options: Omit<Intl.NumberFormatOptions, "currency"> & {
         currency: string;
-      } = { currency: "USD" },
+      } = { currency: "USD" }
     ): string {
       return new Intl.NumberFormat(locale, {
         style: "currency",
@@ -83,13 +83,13 @@ export function useIntl() {
       value: number,
       singular: string,
       plural?: string | Intl.NumberFormatOptions,
-      options?: Intl.NumberFormatOptions,
+      options?: Intl.NumberFormatOptions
     ): string {
       options = typeof plural === "string" ? options : plural;
       const pluralRules = new Intl.PluralRules(locale);
       const grammaticalNumber = pluralRules.select(value);
       const formattedCount = new Intl.NumberFormat(locale, options).format(
-        value,
+        value
       );
 
       return `${formattedCount} ${
@@ -99,20 +99,6 @@ export function useIntl() {
           ? plural
           : singular + "s"
       }`;
-    },
-
-    /**
-     * Enable plural-sensitive message formatting using the current locale.
-     *
-     * @param value
-     * @param options
-     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules
-     */
-    pluralRules(
-      value: number,
-      options?: Intl.PluralRulesOptions,
-    ): Intl.LDMLPluralRule {
-      return new Intl.PluralRules(locale, options).select(value);
     },
 
     /**
@@ -139,7 +125,7 @@ export function useIntl() {
     relativeTimeFormat(
       value: number,
       unit: Intl.RelativeTimeFormatUnit,
-      options?: Intl.RelativeTimeFormatOptions,
+      options?: Intl.RelativeTimeFormatOptions
     ): string {
       return new Intl.RelativeTimeFormat(locale, options).format(value, unit);
     },
@@ -161,103 +147,9 @@ export function useIntl() {
      * @param options
      */
     compare<T extends string>(
-      options: Intl.CollatorOptions = {},
+      options: Intl.CollatorOptions = {}
     ): (a: T, b: T) => number {
       return new Intl.Collator(locale, options).compare;
-    },
-
-    /**
-     * Formats a number of milliseconds into a locale-aware, human-readable string
-     * using `Intl.NumberFormat`.
-     *
-     * @param value - The number of milliseconds to format.
-     * @param options - The options to use from `Intl.NumberFormat` when formatting.
-     */
-    duration(
-      value: number,
-      options: Pick<Intl.NumberFormatOptions, "unitDisplay"> = {},
-    ): string {
-      const years = Math.floor(value / 31536000000);
-      const months = Math.floor((value % 31536000000) / 2592000000);
-      const days = Math.floor((value % 2592000000) / 86400000);
-      const hours = Math.floor((value % 86400000) / 3600000);
-      const minutes = Math.floor((value % 3600000) / 60000);
-      const seconds = Math.floor((value % 60000) / 1000);
-      const milliseconds = Math.floor(value % 1000);
-
-      const parts = [];
-
-      if (years) {
-        parts.push(
-          this.number(years, {
-            style: "unit",
-            unit: "year",
-            ...options,
-          }),
-        );
-      }
-
-      if (months) {
-        parts.push(
-          this.number(months, {
-            style: "unit",
-            unit: "month",
-            ...options,
-          }),
-        );
-      }
-
-      if (days) {
-        parts.push(
-          this.number(days, {
-            style: "unit",
-            unit: "day",
-            ...options,
-          }),
-        );
-      }
-
-      if (hours && !days) {
-        parts.push(
-          this.number(hours, {
-            style: "unit",
-            unit: "hour",
-            ...options,
-          }),
-        );
-      }
-
-      if (minutes && !days && !years && !months) {
-        parts.push(
-          this.number(minutes, {
-            style: "unit",
-            unit: "minute",
-            ...options,
-          }),
-        );
-      }
-
-      if (seconds && !hours) {
-        parts.push(
-          this.number(seconds, {
-            style: "unit",
-            unit: "second",
-            ...options,
-          }),
-        );
-      }
-
-      if (!parts.length) {
-        parts.push(
-          this.number(milliseconds, {
-            style: "unit",
-            unit: "millisecond",
-            ...options,
-          }),
-        );
-      }
-
-      return parts.join(" ");
     },
   };
 }

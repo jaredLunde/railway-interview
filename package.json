@@ -2,7 +2,6 @@
   "name": "railway-interview",
   "private": true,
   "scripts": {
-    "build:api": "bun run --cwd apps/api build",
     "build:web": "bun run --cwd apps/web build",
     "check-types": "bun run --cwd apps/web check-types && bun run --cwd apps/api check-types",
     "codegen": "bun run --cwd apps/api codegen",
