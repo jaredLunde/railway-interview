@@ -13,13 +13,12 @@ import { env } from "./env";
 import { getSdk } from "./sdk";
 
 const graphqlClient = new GraphQLClient(
-  "https://backboard.railway.app/graphql/v2",
+  "https://backboard.railway.app/graphql/v2"
 );
 
 const sdk = getSdk(graphqlClient);
-const API_KEY_COOKIE_NAME = env.NODE_ENV === "development"
-  ? "railway-key"
-  : "__Host-railway-key";
+const API_KEY_COOKIE_NAME =
+  env.NODE_ENV === "development" ? "railway-key" : "__Host-railway-key";
 const requireSession: MiddlewareHandler<{
   Variables: {
     apiKey: string;
@@ -42,7 +41,7 @@ export const app = new Hono()
       if (env.NODE_ENV === "development") {
         console.log(message);
       }
-    }),
+    })
   )
   .use("*", secureHeaders())
   .use(
@@ -52,7 +51,7 @@ export const app = new Hono()
       allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       credentials: true,
       maxAge: 604800,
-    }),
+    })
   )
   .post(
     "/sessions",
@@ -60,7 +59,7 @@ export const app = new Hono()
       "form",
       z.object({
         apiKey: z.string().uuid(),
-      }),
+      })
     ),
     async (c) => {
       const { apiKey } = c.req.valid("form");
@@ -73,7 +72,7 @@ export const app = new Hono()
       });
 
       return c.redirect(env.DASHBOARD_URL);
-    },
+    }
   )
   .get("/sessions", requireSession, async (c) => {
     const apiKey = c.get("apiKey");
@@ -97,7 +96,7 @@ export const app = new Hono()
       { input: {} },
       {
         Authorization: `Bearer ${apiKey}`,
-      },
+      }
     );
 
     return c.jsonT({
@@ -116,7 +115,7 @@ export const app = new Hono()
         { id },
         {
           Authorization: `Bearer ${apiKey}`,
-        },
+        }
       );
 
       return c.jsonT({
@@ -127,7 +126,7 @@ export const app = new Hono()
         environments: project.environments.edges,
         services: project.services,
       });
-    },
+    }
   )
   .get("/github/repos", requireSession, async (c) => {
     const apiKey = c.get("apiKey");
@@ -170,7 +169,7 @@ export const app = new Hono()
             image: z.string(),
           }),
         ]),
-      }),
+      })
     ),
     async (c) => {
       const apiKey = c.get("apiKey");
@@ -180,7 +179,7 @@ export const app = new Hono()
         { input: { ...input, projectId: id } },
         {
           Authorization: `Bearer ${apiKey}`,
-        },
+        }
       );
 
       return c.jsonT({
@@ -188,7 +187,7 @@ export const app = new Hono()
         name: serviceCreate.name,
         serviceInstances: serviceCreate.serviceInstances.edges,
       });
-    },
+    }
   )
   .get(
     "/services/:id",
@@ -201,7 +200,7 @@ export const app = new Hono()
         { id },
         {
           Authorization: `Bearer ${apiKey}`,
-        },
+        }
       );
 
       return c.jsonT({
@@ -213,7 +212,7 @@ export const app = new Hono()
         serviceInstances: service.serviceInstances.edges,
         deployments: service.deployments.edges,
       });
-    },
+    }
   )
   .delete(
     "/services/:id",
@@ -228,11 +227,11 @@ export const app = new Hono()
         { id, environmentId },
         {
           Authorization: `Bearer ${apiKey}`,
-        },
+        }
       );
 
       return c.jsonT(serviceDelete);
-    },
+    }
   )
   .delete(
     "/deployments/:id",
@@ -245,11 +244,11 @@ export const app = new Hono()
         { id },
         {
           Authorization: `Bearer ${apiKey}`,
-        },
+        }
       );
 
       return c.jsonT(deploymentRemove);
-    },
+    }
   )
   .post(
     "/project/:id/deploy-template",
@@ -269,9 +268,9 @@ export const app = new Hono()
             serviceName: z.string(),
             template: z.string().url(),
             variables: z.record(z.string()),
-          }),
+          })
         ),
-      }),
+      })
     ),
     async (c) => {
       const apiKey = c.get("apiKey");
@@ -281,15 +280,16 @@ export const app = new Hono()
         { input: { ...input, projectId: id } },
         {
           Authorization: `Bearer ${apiKey}`,
-        },
+        }
       );
 
       return c.jsonT({
         projectId: templateDeploy.projectId,
         workflowId: templateDeploy.workflowId,
       });
-    },
+    }
   )
+  .get("/healthz", (c) => c.text("ok"))
   .notFound((c) => c.text("Not found: " + c.req.url, 404));
 
 export type AppType = typeof app;
