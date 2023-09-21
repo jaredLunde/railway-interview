@@ -20,6 +20,7 @@ git clone https://github.com/jaredLunde/railway-interview
 2. Install dependencies
 
 ```sh
+cd railway-interview
 bun install
 ```
 
