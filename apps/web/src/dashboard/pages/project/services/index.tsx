@@ -1,4 +1,9 @@
-import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowTopRightOnSquareIcon,
+  ChevronRightIcon,
+  LinkIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -191,11 +196,25 @@ function DeploymentRow({ deployment }: {
   return (
     <li key={deployment.node.id} className="p-2">
       <div className="grid grid-cols-grow-l">
-        <div>
+        <div className="flex flex-col gap-1">
           <div className="font-bold font-brand">
-            {deployment.node.staticUrl ?? deployment.node.url
-              ?? deployment.node.id}
+            {(deployment.node.staticUrl || deployment.node.url)
+              ? (
+                <a
+                  href={`https://${
+                    deployment.node.url ?? deployment.node.staticUrl
+                  }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline flex items-center gap-2 text-base"
+                >
+                  {deployment.node.staticUrl ?? deployment.node.url}
+                  <ArrowTopRightOnSquareIcon height="1em" />
+                </a>
+              )
+              : deployment.node.id}
           </div>
+
           <DeploymentStatusIcon
             status={deployment.node.status}
             createdAt={deployment.node.createdAt}
