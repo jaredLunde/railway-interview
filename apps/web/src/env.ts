@@ -5,7 +5,7 @@ export const serverSchema = z.object({
    * A publicly accessible URL for the server. This is used for generating
    * absolute URLs for emails and other things.
    */
-  PUBLIC_RAILWAY_PUBLIC_DOMAIN: z.string().url().default("localhost:3000"),
+  PUBLIC_RAILWAY_PUBLIC_DOMAIN: z.string().default("localhost:3000"),
 
   /**
    * A publicly accessible URL for the server. This is used for generating

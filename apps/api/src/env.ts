@@ -23,7 +23,7 @@ export const serverSchema = z.object({
    * A publicly accessible URL for the server. This is used for generating
    * absolute URLs for emails and other things.
    */
-  RAILWAY_PUBLIC_DOMAIN: z.string().url().default("http://localhost:4000"),
+  RAILWAY_PUBLIC_DOMAIN: z.string().default("localhost:4000"),
 
   /**
    * The URL of the dashboard

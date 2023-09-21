@@ -130,7 +130,7 @@ export const Service: AuthenticatedComponent = () => {
           </div>
         )}
 
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col gap-4 max-h-[40vh] overflow-auto">
           {hasDeployments && service.data.deployments.map((deployment) => {
             return (
               <DeploymentRow key={deployment.node.id} deployment={deployment} />
