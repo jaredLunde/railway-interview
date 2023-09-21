@@ -87,7 +87,12 @@ export const app = new Hono()
     });
   })
   .get("/sessions/destroy", (c) => {
-    deleteCookie(c, API_KEY_COOKIE_NAME, { path: "/" });
+    deleteCookie(c, API_KEY_COOKIE_NAME, {
+      httpOnly: true,
+      sameSite: "Strict",
+      secure: env.NODE_ENV === "production",
+      path: "/",
+    });
     return c.redirect(env.DASHBOARD_URL);
   })
   .post("/projects", requireSession, async (c) => {

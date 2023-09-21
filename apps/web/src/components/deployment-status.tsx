@@ -1,9 +1,9 @@
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import {
+  CheckBadgeIcon,
   ExclamationTriangleIcon,
   NoSymbolIcon,
   ViewColumnsIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
 import { RelativeTime } from "../intl/relative-time";
 import { Spinner } from "./spinner";
 
@@ -44,7 +44,7 @@ export function DeploymentStatusIcon(
       break;
 
     case DeploymentStatus.Failed:
-      icon = <ExclamationTriangleIcon className="text-red-500" />;
+      icon = <ExclamationTriangleIcon height="1em" className="text-red-500" />;
       text = (
         <>
           Failed <RelativeTime>{new Date(createdAt)}</RelativeTime>
@@ -53,7 +53,7 @@ export function DeploymentStatusIcon(
       break;
 
     case DeploymentStatus.Crashed:
-      icon = <ExclamationTriangleIcon className="text-red-500" />;
+      icon = <ExclamationTriangleIcon height="1em" className="text-red-500" />;
       text = (
         <>
           Crashed <RelativeTime>{new Date(createdAt)}</RelativeTime>
@@ -62,7 +62,7 @@ export function DeploymentStatusIcon(
       break;
 
     case DeploymentStatus.Removed:
-      icon = <NoSymbolIcon className="text-slate-400" />;
+      icon = <NoSymbolIcon height="1em" className="text-slate-400" />;
       text = (
         <>
           Removed <RelativeTime>{new Date(createdAt)}</RelativeTime>
