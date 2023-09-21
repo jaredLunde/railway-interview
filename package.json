@@ -2,11 +2,15 @@
   "name": "railway-interview",
   "private": true,
   "scripts": {
+    "build:api": "bun run --cwd apps/api build",
+    "build:web": "bun run --cwd apps/web build",
     "check-types": "bun run --cwd apps/web check-types && bun run --cwd apps/api check-types",
     "codegen": "bun run --cwd apps/api codegen",
     "dev": "bunx concurrently --kill-others \"bun run --cwd apps/web dev\" \"bun run --cwd apps/api dev\"",
     "fmt": "dprint fmt",
-    "fmt:check": "dprint check"
+    "fmt:check": "dprint check",
+    "start:api": "bun run --cwd apps/api start",
+    "start:web": "bun run --cwd apps/web start"
   },
   "devDependencies": {
     "dprint": "^0.41.0"
