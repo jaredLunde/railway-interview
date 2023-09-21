@@ -1,0 +1,22 @@
+# node/typescript
+*.tsbuildinfo
+.sentryclirc
+trace.json
+node_modules
+coverage
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# astro
+.astro
+
+# dist files
+dist
+
+# local env files
+.env
+.env.development
+.env.production
+!.env.test
+!.vscode

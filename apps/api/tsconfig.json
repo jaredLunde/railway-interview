@@ -1,0 +1,7 @@
+{
+  "extends": "@tsconfig/bun",
+  "compilerOptions": {
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*.ts"]
+}

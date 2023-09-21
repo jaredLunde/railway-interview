@@ -1,0 +1,277 @@
+query me {
+  me {
+    id
+
+    projects {
+      edges {
+        node {
+          id
+          name
+          description
+          createdAt
+
+          baseEnvironment {
+            id
+            name
+          }
+
+          environments {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+
+          services {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getProject($id: String!) {
+  project(id: $id) {
+    id
+    name
+    description
+    createdAt
+
+    baseEnvironment {
+      id
+      name
+    }
+
+    environments {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    services {
+      edges {
+        node {
+          id
+          name
+          icon
+          createdAt
+
+          serviceInstances {
+            edges {
+              node {
+                createdAt
+
+                domains {
+                  customDomains {
+                    domain
+                  }
+
+                  serviceDomains {
+                    domain
+                  }
+                }
+                source {
+                  repo
+                  image
+                }
+              }
+            }
+          }
+
+          deployments {
+            edges {
+              node {
+                id
+                url
+                staticUrl
+                status
+                createdAt
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getService($id: String!) {
+  service(id: $id) {
+    id
+    name
+    icon
+    createdAt
+
+    serviceInstances {
+      edges {
+        node {
+          id
+          createdAt
+
+          source {
+            repo
+            image
+          }
+        }
+      }
+    }
+
+    deployments {
+      edges {
+        node {
+          id
+          url
+          staticUrl
+          status
+          canRedeploy
+          createdAt
+          environment {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}
+
+query listGithubRepos {
+  githubRepos {
+    id
+    name
+    fullName
+    defaultBranch
+    installationId
+  }
+}
+
+query listTemplates {
+  templates {
+    edges {
+      node {
+        id
+        code
+        metadata
+
+        services {
+          edges {
+            node {
+              id
+              config
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query listDeploymentLogs($deploymentId: String!) {
+  deploymentLogs(deploymentId: $deploymentId) {
+    message
+    severity
+    timestamp
+    tags {
+      deploymentId
+      deploymentInstanceId
+      serviceId
+    }
+  }
+}
+
+query listBuildLogs($deploymentId: String!) {
+  deploymentLogs(deploymentId: $deploymentId) {
+    message
+    severity
+    timestamp
+    tags {
+      deploymentId
+      deploymentInstanceId
+      serviceId
+    }
+  }
+}
+
+mutation deploymentCancel($id: String!) {
+  deploymentCancel(id: $id)
+}
+
+mutation deploymentRemove($id: String!) {
+  deploymentRemove(id: $id)
+}
+
+mutation deploymentRestart($id: String!) {
+  deploymentRestart(id: $id)
+}
+
+mutation serviceCreate($input: ServiceCreateInput!) {
+  serviceCreate(input: $input) {
+    id
+    name
+    createdAt
+    serviceInstances {
+      edges {
+        node {
+          id
+          environmentId
+          nixpacksPlan
+          healthcheckPath
+          healthcheckTimeout
+          startCommand
+          buildCommand
+          builder
+        }
+      }
+    }
+  }
+}
+
+mutation serviceDelete($environmentId: String!, $id: String!) {
+  serviceDelete(environmentId: $environmentId, id: $id)
+}
+
+mutation projectCreate($input: ProjectCreateInput!) {
+  projectCreate(input: $input) {
+    id
+    name
+    createdAt
+    baseEnvironment {
+      id
+      name
+    }
+  }
+}
+
+mutation serviceInstanceUpdate(
+  $environmentId: String!
+  $serviceId: String!
+  $input: ServiceInstanceUpdateInput!
+) {
+  serviceInstanceUpdate(
+    environmentId: $environmentId
+    serviceId: $serviceId
+    input: $input
+  )
+}
+
+mutation templateDeploy($input: TemplateDeployInput!) {
+  templateDeploy(input: $input) {
+    projectId
+    workflowId
+  }
+}
+
+query githubWritableScopes {
+  githubWritableScopes
+}

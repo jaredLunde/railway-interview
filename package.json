@@ -1,0 +1,17 @@
+{
+  "name": "railway-interview",
+  "private": true,
+  "scripts": {
+    "check-types": "bun run --cwd apps/web check-types && bun run --cwd apps/api check-types",
+    "codegen": "bun run --cwd apps/api codegen",
+    "dev": "bunx concurrently --kill-others \"bun run --cwd apps/web dev\" \"bun run --cwd apps/api dev\"",
+    "fmt": "dprint fmt",
+    "fmt:check": "dprint check"
+  },
+  "devDependencies": {
+    "dprint": "^0.41.0"
+  },
+  "workspaces": [
+    "apps/*"
+  ]
+}

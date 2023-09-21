@@ -1,0 +1,33 @@
+name: Pull request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.head_ref }}-validate
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Check formatting
+        run: bun fmt:check
+
+      - name: Check types
+        run: bun check-types

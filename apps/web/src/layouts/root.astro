@@ -1,0 +1,28 @@
+---
+import { Texture } from "../components/texture";
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+
+  <body
+    class="relative min-h-screen w-screen bg-slate-950 font-sans text-sm text-slate-100 retina:antialiased"
+  >
+    <Texture />
+    <slot />
+  </body>
+</html>

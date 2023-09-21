@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "dprint.dprint",
+  "[dockerfile]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  }
+}
