@@ -301,9 +301,9 @@ export const app = new Hono()
 export type AppType = typeof app;
 
 Bun.serve({
-  hostname: env.HOSTNAME,
+  hostname: env.HOST,
   port: env.PORT,
   fetch: app.fetch,
 });
 
-console.log(`Listening on http://${env.HOSTNAME}:${env.PORT}`);
+console.log(`Listening on http://${env.HOST}:${env.PORT}`);
