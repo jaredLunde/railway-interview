@@ -12,7 +12,7 @@ export const serverSchema = z.object({
   /**
    * The hostname the server should listen on
    */
-  HOSTNAME: z.string().default("0.0.0.0"),
+  HOST: z.string().default("0.0.0.0"),
 
   /**
    * The port the server should listen on
