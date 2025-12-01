@@ -306,6 +306,4 @@ Bun.serve({
   fetch: app.fetch,
 });
 
-if (env.NODE_ENV === "development") {
-  console.log(`Listening on http://${env.HOSTNAME}:${env.PORT}`);
-}
+console.log(`Listening on http://${env.HOSTNAME}:${env.PORT}`);
